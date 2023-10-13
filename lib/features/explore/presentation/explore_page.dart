@@ -25,10 +25,10 @@ class _PeopleList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
-      ),
-      margin: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
+      color: Colors.white,
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -39,7 +39,9 @@ class _PeopleList extends StatelessWidget {
               horizontal: 18,
             ),
             decoration: BoxDecoration(
-                border: Border.all(), borderRadius: BorderRadius.circular(20)),
+              border: Border.all(),
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Text('Follow'),
           )
         ],

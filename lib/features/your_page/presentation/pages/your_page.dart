@@ -42,7 +42,7 @@ class _ListPost extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: const Text(
               '@alifalgibran',
               style: TextStyle(
@@ -63,7 +63,7 @@ class _ListPost extends StatelessWidget {
             color: Colors.grey.shade300,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: const Text(
                 'ini captionnya untung ada itu  tawwana hahaha @alifalgibran'
                 ' lorem ipsum doler amat'),

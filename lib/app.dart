@@ -35,8 +35,8 @@ class _AppState extends State<App> {
   /// widget list
   final List<Widget> bottomBarPages = [
     YourPage(),
-    ExplorePage(),
     Container(child: Text('3')),
+    ExplorePage(),
     RegisterPage(),
   ];
 
