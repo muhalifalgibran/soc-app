@@ -1,8 +1,8 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:soc_app/features/explore/presentation/explore_page.dart';
-import 'package:soc_app/features/profile/registration/presentation/login_page.dart';
-import 'package:soc_app/features/profile/registration/presentation/register_page.dart';
+import 'package:soc_app/features/profile/registration/presentation/pages/register_page.dart';
+import 'package:soc_app/features/profile/registration/presentation/pages/user_profile_page.dart';
 import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
 
 class App extends StatefulWidget {
@@ -27,7 +27,6 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    // TODO: implement initState
     print('object');
     super.initState();
   }
@@ -37,7 +36,7 @@ class _AppState extends State<App> {
     YourPage(),
     Container(child: Text('3')),
     ExplorePage(),
-    RegisterPage(),
+    UserProfilePage(),
   ];
 
   int maxCount = 4;
@@ -45,7 +44,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     // return LoginPage();
     return Scaffold(
-      // backgroundColor: Colors.red,
+      backgroundColor: Colors.grey.shade300,
       body: Center(
         child: PageView(
           controller: _pageController,

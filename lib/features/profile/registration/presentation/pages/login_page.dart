@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soc_app/features/profile/registration/presentation/register_page.dart';
+import 'package:soc_app/features/profile/registration/presentation/pages/register_page.dart';
 import 'package:soc_app/widgets/neu_container.dart';
 import 'package:soc_app/widgets/soc_button.dart';
 import 'package:soc_app/widgets/soc_form.dart';

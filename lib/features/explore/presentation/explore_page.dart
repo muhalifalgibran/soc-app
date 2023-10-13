@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soc_app/widgets/neu_container.dart';
 
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
@@ -38,11 +39,14 @@ class _PeopleList extends StatelessWidget {
               vertical: 4,
               horizontal: 18,
             ),
-            decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(20),
+            // decoration: BoxDecoration(
+            //   border: Border.all(),
+            //   borderRadius: BorderRadius.circular(20),
+            // ),
+            child: NeuContainer(
+              backgroundColor: Colors.white,
+              child: Text('Follow'),
             ),
-            child: Text('Follow'),
           )
         ],
       ),
