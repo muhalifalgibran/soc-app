@@ -26,7 +26,7 @@ class SocForm extends StatelessWidget {
               fontSize: 14.0,
             ),
           ),
-          TextField(
+          TextFormField(
             obscureText: obscure,
             style: const TextStyle(fontSize: 14.0),
             onChanged: onChanged,

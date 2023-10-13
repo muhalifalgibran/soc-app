@@ -1,5 +1,7 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:soc_app/features/profile/registration/presentation/login_page.dart';
+import 'package:soc_app/features/profile/registration/presentation/register_page.dart';
 import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
 
 class App extends StatefulWidget {
@@ -34,20 +36,27 @@ class _AppState extends State<App> {
     YourPage(),
     Container(child: Text('2')),
     Container(child: Text('3')),
-    Container(child: Text('4')),
+    RegisterPage(),
   ];
 
   int maxCount = 4;
   @override
   Widget build(BuildContext context) {
+    return LoginPage();
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: List.generate(
-            bottomBarPages.length, (index) => bottomBarPages[index]),
+      backgroundColor: Colors.red,
+      body: Center(
+        child: PageView(
+          controller: _pageController,
+          // physics: const NeverScrollableScrollPhysics(),
+          children: List.generate(
+            bottomBarPages.length,
+            (index) => bottomBarPages[index],
+          ),
+        ),
       ),
       extendBody: true,
+      resizeToAvoidBottomInset: false,
       bottomNavigationBar: (bottomBarPages.length <= maxCount)
           ? AnimatedNotchBottomBar(
               /// Provide NotchBottomBarController
@@ -114,7 +123,11 @@ class _AppState extends State<App> {
                 _pageController.jumpToPage(index);
               },
             )
-          : null,
+          : const SizedBox(
+              child: Center(
+                child: Text('asdasd'),
+              ),
+            ),
     );
   }
 }

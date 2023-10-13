@@ -36,6 +36,11 @@ class _SocButtonState extends State<SocButton> {
           isPressed = true;
         });
       },
+      onLongPressUp: () {
+        setState(() {
+          isPressed = false;
+        });
+      },
       onTapUp: (_) {
         setState(() {
           isPressed = false;
