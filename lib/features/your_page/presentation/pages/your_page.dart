@@ -15,65 +15,60 @@ class _YourPageState extends State<YourPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
-      body: Center(
+      backgroundColor: Colors.grey.shade400,
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const NeuContainer(
-              backgroundColor: Colors.black54,
-              child: Text(
-                'Soc.',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 48,
-                  color: Colors.white,
-                ),
+            children: List.generate(100, (index) {
+          return _ListPost();
+        })),
+      ),
+    );
+  }
+}
+
+class _ListPost extends StatelessWidget {
+  const _ListPost({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      margin: const EdgeInsets.symmetric(
+        vertical: 12,
+      ),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: const Text(
+              '@alifalgibran',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 80),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: NeuContainer(
-                child: Column(
-                  children: [
-                    SocForm(
-                      label: 'Email',
-                      onChanged: (value) {},
-                    ),
-                    const SizedBox(height: 20),
-                    SocForm(
-                      label: 'Password',
-                      obscure: true,
-                      onChanged: (value) {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            SocButton(
-              onPressed: () {
-                print('object1');
-              },
-              label: 'Login',
-            ),
-            const SizedBox(height: 20),
-            SocButton(
-              onPressed: () {},
-              label: 'Register',
-              color: Colors.blue.shade100,
-            ),
-            const SizedBox(height: 20),
-            // SocButton(
-            //   onPressed: () {},
-            //   width: 290,
-            //   prefix: const Icon(Icons.mail_outline_rounded),
-            //   label: 'Register with email',
-            //   color: Colors.red.shade300,
-            // ),
-          ],
-        ),
+          ),
+          Container(
+            height: 1,
+            color: Colors.grey.shade300,
+          ),
+          Container(
+            height: 320,
+            color: Colors.grey.shade300,
+          ),
+          Container(
+            height: 1,
+            color: Colors.grey.shade300,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: const Text(
+                'ini captionnya untung ada itu  tawwana hahaha @alifalgibran'
+                ' lorem ipsum doler amat'),
+          ),
+        ],
       ),
     );
   }
