@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:soc_app/features/post/presentation/widgets/add_tag_widget.dart';
 import 'package:soc_app/widgets/neu_container.dart';
-import 'package:camera/camera.dart';
+import 'package:soc_app/widgets/soc_button.dart';
 
 class CreatePostPage extends StatefulWidget {
   const CreatePostPage({super.key});
@@ -16,6 +16,8 @@ class CreatePostPage extends StatefulWidget {
 class _CreatePostPageState extends State<CreatePostPage> {
   XFile? image;
   String? filePath;
+  TextEditingController captions = TextEditingController();
+  List<String> usernames = [];
 
   final ImagePicker picker = ImagePicker();
 
@@ -31,6 +33,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isResetActive =
+        filePath != null || usernames.isNotEmpty || captions.text != '';
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
       child: SingleChildScrollView(
@@ -40,7 +44,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
             Row(
               children: [
                 const Text(
-                  'Post Something..',
+                  'post Something..',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -48,11 +52,13 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 ),
                 const Spacer(),
                 // display reset if there is image
-                filePath != null
+                isResetActive
                     ? GestureDetector(
                         onTap: () {
                           setState(() {
                             filePath = null;
+                            captions.text = '';
+                            usernames.clear();
                           });
                         },
                         child: const Icon(Icons.replay_outlined))
@@ -79,7 +85,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               image: FileImage(File(filePath as String)),
                             )),
                       )
-                    : Container(
+                    : const SizedBox(
                         height: 190,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -100,9 +106,57 @@ class _CreatePostPageState extends State<CreatePostPage> {
             ),
             const SizedBox(height: 8),
             // add tags
+            usernames.isNotEmpty
+                ? Wrap(
+                    direction: Axis.horizontal,
+                    children: List.generate(
+                      usernames.length,
+                      (index) => Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: Text(
+                          usernames[index],
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
             AddTagWidget(
-              tags: (tags) {},
-            )
+              tags: (tags) {
+                setState(() {
+                  usernames = tags;
+                });
+              },
+            ),
+            const SizedBox(height: 12),
+            // add captions
+            NeuContainer(
+              border: Border.all(),
+              child: TextField(
+                controller: captions,
+                onChanged: (value) {
+                  setState(() {
+                    // captions. = value;
+                  });
+                },
+                maxLines: 8,
+                decoration: const InputDecoration.collapsed(
+                  hintText: 'write your caption..',
+                ),
+                style: const TextStyle(fontSize: 12),
+              ),
+            ),
+            const SizedBox(height: 32),
+            // button
+            SocButton(
+              onPressed:
+                  filePath != null && (captions.text != '') ? () {} : null,
+              label: 'post!',
+            ),
           ],
         ),
       ),

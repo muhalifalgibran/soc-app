@@ -4,11 +4,13 @@ class NeuContainer extends StatelessWidget {
   const NeuContainer({
     required this.child,
     this.backgroundColor,
+    this.border,
     super.key,
   });
 
   final Widget child;
   final Color? backgroundColor;
+  final BoxBorder? border;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class NeuContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor ?? Colors.grey.shade300,
         borderRadius: BorderRadius.circular(15),
+        border: border,
         boxShadow: const [
           BoxShadow(
             color: Colors.grey,

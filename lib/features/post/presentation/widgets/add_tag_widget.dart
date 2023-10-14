@@ -19,25 +19,6 @@ class _AddTagWidgetState extends State<AddTagWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        usernames.isNotEmpty
-            ? Wrap(
-                direction: Axis.horizontal,
-                children: List.generate(
-                  usernames.length,
-                  (index) => Container(
-                    margin: const EdgeInsets.only(right: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                    child: Text(
-                      usernames[index],
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-              )
-            : Container(),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -45,11 +26,10 @@ class _AddTagWidgetState extends State<AddTagWidget> {
               height: 30,
               width: 100,
               onPressed: () async {
-                await Future.delayed(Duration(milliseconds: 250), () {
+                await Future.delayed(const Duration(milliseconds: 250), () {
                   addTagDialog(context);
                 });
               },
-              // prefix: const Icon(Icons.tag, size: 18),
               label: '@ add tag',
               labelStyle:
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
@@ -79,31 +59,29 @@ class _AddTagWidgetState extends State<AddTagWidget> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
+                        return 'Please enter a username';
                       } else if (!value.contains(RegExp(r'^@[^@]*$'))) {
-                        return 'Please valid tag';
+                        return 'Please valid username';
                       }
                       return null;
                     },
                   ),
                 ),
                 const SizedBox(height: 8),
-                GestureDetector(
-                  onTap: () {},
-                  child: SocButton(
-                    width: 80,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (valueAdd != null) {
-                          Navigator.of(context).pop();
-                          setState(() {
-                            usernames.add(valueAdd!);
-                          });
-                        }
+                SocButton(
+                  width: 80,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      if (valueAdd != null) {
+                        Navigator.of(context).pop();
+                        setState(() {
+                          usernames.add(valueAdd!);
+                        });
+                        widget.tags(usernames);
                       }
-                    },
-                    label: 'add',
-                  ),
+                    }
+                  },
+                  label: 'add',
                 )
               ],
             ),

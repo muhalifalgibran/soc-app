@@ -3,7 +3,7 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
 class SocButton extends StatefulWidget {
   const SocButton({
-    required this.onPressed,
+    this.onPressed,
     required this.label,
     this.height,
     this.width,
@@ -12,7 +12,7 @@ class SocButton extends StatefulWidget {
     this.labelStyle,
     Key? key,
   }) : super(key: key);
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String label;
   final Color? color;
   final double? height, width;
@@ -33,17 +33,21 @@ class _SocButtonState extends State<SocButton> {
 
     return GestureDetector(
       onTapDown: (_) {
-        widget.onPressed();
+        if (widget.onPressed == null) return;
+        widget.onPressed!();
         setState(() {
           isPressed = true;
         });
       },
       onLongPressUp: () {
+        if (widget.onPressed == null) return;
+
         setState(() {
           isPressed = false;
         });
       },
       onTapUp: (_) {
+        if (widget.onPressed == null) return;
         setState(() {
           isPressed = false;
         });
@@ -62,14 +66,14 @@ class _SocButtonState extends State<SocButton> {
                     spreadRadius: 1,
                     blurRadius: blur,
                     offset: offset,
-                    inset: isPressed,
+                    inset: widget.onPressed == null ? false : isPressed,
                   ),
                   BoxShadow(
                     color: Colors.white,
                     spreadRadius: 1,
                     blurRadius: blur,
                     offset: -offset,
-                    inset: isPressed,
+                    inset: widget.onPressed == null ? false : isPressed,
                   )
                 ]),
             child: Center(
