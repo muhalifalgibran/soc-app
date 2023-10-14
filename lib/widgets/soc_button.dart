@@ -9,6 +9,7 @@ class SocButton extends StatefulWidget {
     this.width,
     this.color,
     this.prefix,
+    this.labelStyle,
     Key? key,
   }) : super(key: key);
   final VoidCallback onPressed;
@@ -16,6 +17,7 @@ class SocButton extends StatefulWidget {
   final Color? color;
   final double? height, width;
   final Widget? prefix;
+  final TextStyle? labelStyle;
 
   @override
   State<SocButton> createState() => _SocButtonState();
@@ -76,17 +78,18 @@ class _SocButtonState extends State<SocButton> {
                 children: [
                   widget.prefix != null
                       ? Container(
-                          margin: const EdgeInsets.only(right: 8),
+                          margin: const EdgeInsets.only(right: 4),
                           child: widget.prefix,
                         )
                       : const SizedBox(),
                   Text(
                     widget.label,
-                    style: TextStyle(
-                      fontSize: isPressed ? 15.5 : 16.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: widget.labelStyle ??
+                        TextStyle(
+                          fontSize: isPressed ? 15.5 : 16.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ],
               ),

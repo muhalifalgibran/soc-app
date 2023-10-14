@@ -1,6 +1,7 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:soc_app/features/explore/presentation/explore_page.dart';
+import 'package:soc_app/features/post/presentation/page/create_post_page.dart';
 import 'package:soc_app/features/profile/registration/presentation/pages/register_page.dart';
 import 'package:soc_app/features/profile/registration/presentation/pages/user_profile_page.dart';
 import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
@@ -19,6 +20,8 @@ class _AppState extends State<App> {
   /// Controller to handle bottom nav bar and also handles initial page
   final _controller = NotchBottomBarController(index: 0);
 
+  int _indexPage = 0;
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -32,9 +35,9 @@ class _AppState extends State<App> {
   }
 
   /// widget list
-  final List<Widget> bottomBarPages = [
+  final List<Widget> bottomBarPages = const [
     YourPage(),
-    Container(child: Text('3')),
+    CreatePostPage(),
     ExplorePage(),
     UserProfilePage(),
   ];
@@ -46,13 +49,11 @@ class _AppState extends State<App> {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       body: Center(
-        child: PageView(
-          controller: _pageController,
+        child: IndexedStack(
+          // controller: _pageController,
           // physics: const NeverScrollableScrollPhysics(),
-          children: List.generate(
-            bottomBarPages.length,
-            (index) => bottomBarPages[index],
-          ),
+          index: _indexPage,
+          children: bottomBarPages,
         ),
       ),
       extendBody: true,
@@ -119,8 +120,10 @@ class _AppState extends State<App> {
               ],
               onTap: (index) {
                 /// perform action on tab change and to update pages you can update pages without pages
-                print('current selected index $index');
-                _pageController.jumpToPage(index);
+                // _pageController.jumpToPage(index);
+                setState(() {
+                  _indexPage = index;
+                });
               },
             )
           : const SizedBox(

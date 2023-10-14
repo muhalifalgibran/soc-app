@@ -4,8 +4,8 @@ import 'package:soc_app/widgets/soc_button.dart';
 import 'package:soc_app/widgets/soc_circular_image.dart';
 
 class ProfileHeadWidget extends StatelessWidget {
-  const ProfileHeadWidget({super.key});
-
+  const ProfileHeadWidget({this.isCurrentUser = false, super.key});
+  final bool isCurrentUser;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,13 +75,20 @@ class ProfileHeadWidget extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  SocButton(
-                    width: 100,
-                    height: 40,
-                    onPressed: () {},
-                    color: Colors.red.shade300,
-                    label: 'Logout',
-                  ),
+                  isCurrentUser
+                      ? SocButton(
+                          width: 100,
+                          height: 40,
+                          onPressed: () {},
+                          color: Colors.red.shade300,
+                          label: 'Logout',
+                        )
+                      : SocButton(
+                          width: 100,
+                          height: 40,
+                          onPressed: () {},
+                          label: 'Follow',
+                        ),
                 ],
               ),
             ],
