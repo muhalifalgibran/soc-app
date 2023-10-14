@@ -1,7 +1,12 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:soc_app/core/di/service_locator.dart';
+import 'package:soc_app/core/utils/domain/entities/user_data.dart';
+import 'package:soc_app/features/profile/registration/presentation/cubit/register_cubit.dart';
 import 'package:soc_app/widgets/neu_container.dart';
 import 'package:soc_app/widgets/soc_button.dart';
 import 'package:soc_app/widgets/soc_circular_image.dart';
@@ -32,9 +37,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isButtonActive = (username != null || username != '') ||
-        (password != null || password != '') ||
-        (email != null || email != '');
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       body: Center(
@@ -90,14 +92,18 @@ class _RegisterPageState extends State<RegisterPage> {
                     SocForm(
                       label: 'Email',
                       onChanged: (value) {
-                        email = value;
+                        setState(() {
+                          email = value;
+                        });
                       },
                     ),
                     const SizedBox(height: 20),
                     SocForm(
                       label: 'Username',
                       onChanged: (value) {
-                        username = value;
+                        setState(() {
+                          username = value;
+                        });
                       },
                     ),
                     const SizedBox(height: 20),
@@ -105,7 +111,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       label: 'Password',
                       obscure: true,
                       onChanged: (value) {
-                        password = value;
+                        setState(() {
+                          password = value;
+                        });
                       },
                     ),
                   ],
@@ -114,7 +122,16 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 20),
             SocButton(
-              onPressed: isButtonActive ? () {} : null,
+              onPressed:
+                  (username != null) || (password != null) || (email != null)
+                      ? () {
+                          UserData userData = UserData(
+                            email: email!,
+                            password: password!,
+                          );
+                          getIt<RegisterCubit>().createUser(userData);
+                        }
+                      : null,
               label: 'Register',
               color: Colors.blue.shade100,
             ),

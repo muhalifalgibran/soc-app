@@ -21,6 +21,7 @@ import '../../features/profile/registration/domain/usecases/create_user.dart'
     as _i3;
 import '../../features/profile/registration/presentation/cubit/register_cubit.dart'
     as _i4;
+import '../../features/startup/presentation/cubit/startup_cubit.dart' as _i8;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -39,6 +40,7 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i5.RegisterRemoteDataSourceImpl());
     gh.lazySingleton<_i6.RegisterRepository>(
         () => _i7.RegisterRepositoryImpl(gh<_i5.RegisterRemoteDataSource>()));
+    gh.lazySingleton<_i8.StartupCubit>(() => _i8.StartupCubit());
     return this;
   }
 }

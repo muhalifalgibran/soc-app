@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:injectable/injectable.dart';
 import 'package:soc_app/core/error/failure.dart';
 import 'package:soc_app/core/utils/domain/entities/user_data.dart';
 import 'package:soc_app/core/utils/general_status_state.dart';
@@ -37,6 +38,7 @@ class StartupState extends Equatable {
       ];
 }
 
+@LazySingleton()
 class StartupCubit extends Cubit<StartupState> {
   StartupCubit() : super(const StartupState());
 
