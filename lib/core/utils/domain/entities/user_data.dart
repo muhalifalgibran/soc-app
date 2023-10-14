@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 class UserData extends Equatable {
   final String? id;
   final String? username;
-  final String? email;
-  final String? password;
+  final String email;
+  final String password;
   final String? picUrl;
   final List<String>? following;
   final List<String>? followers;
@@ -13,8 +13,8 @@ class UserData extends Equatable {
   const UserData({
     this.id,
     this.username,
-    this.email,
-    this.password,
+    required this.email,
+    required this.password,
     this.picUrl,
     this.following,
     this.followers,

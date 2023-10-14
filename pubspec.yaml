@@ -46,10 +46,19 @@ dependencies:
   equatable: ^2.0.5
   hive_flutter: ^1.1.0
   flutter_bloc: ^8.1.3
+  dartz: ^0.10.1
+  injectable: ^2.3.2
+  get_it: ^7.6.4
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # put in dev since just for generate
+  injectable_generator: ^2.4.1
+  build_runner: ^2.4.6
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -15,7 +15,6 @@ class CreatePostPage extends StatefulWidget {
 
 class _CreatePostPageState extends State<CreatePostPage> {
   XFile? image;
-  String? filePath;
   TextEditingController captions = TextEditingController();
   List<String> usernames = [];
 
@@ -27,14 +26,13 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
     setState(() {
       image = img;
-      filePath = image?.path;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final isResetActive =
-        filePath != null || usernames.isNotEmpty || captions.text != '';
+        image?.path != null || usernames.isNotEmpty || captions.text != '';
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
       child: SingleChildScrollView(
@@ -56,7 +54,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     ? GestureDetector(
                         onTap: () {
                           setState(() {
-                            filePath = null;
+                            image = null;
                             captions.text = '';
                             usernames.clear();
                           });
@@ -74,7 +72,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 showImageDialog(context);
               },
               child: NeuContainer(
-                child: filePath != null
+                child: image?.path != null
                     ? Container(
                         height: 190,
                         decoration: BoxDecoration(
@@ -82,7 +80,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                 const BorderRadius.all(Radius.circular(4.0)),
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: FileImage(File(filePath as String)),
+                              image: FileImage(File(image?.path as String)),
                             )),
                       )
                     : const SizedBox(
@@ -154,7 +152,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
             // button
             SocButton(
               onPressed:
-                  filePath != null && (captions.text != '') ? () {} : null,
+                  image?.path != null && (captions.text != '') ? () {} : null,
               label: 'post!',
             ),
           ],

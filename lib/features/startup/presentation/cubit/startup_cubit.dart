@@ -49,5 +49,7 @@ class StartupCubit extends Cubit<StartupState> {
     } else {
       emit(state.copyWith(status: GeneralStatusState.failed));
     }
+
+    await Hive.close();
   }
 }
