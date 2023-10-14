@@ -125,10 +125,15 @@ class _RegisterPageState extends State<RegisterPage> {
               onPressed:
                   (username != null) || (password != null) || (email != null)
                       ? () {
+                          print('image pathnya ${image?.path}');
                           UserData userData = UserData(
                             email: email!,
                             password: password!,
+                            picPath: image?.path,
                           );
+                          // if (image?.path != null) {
+                          //   userData.copyWith(picPath: image!.path);
+                          // }
                           getIt<RegisterCubit>().createUser(userData);
                         }
                       : null,

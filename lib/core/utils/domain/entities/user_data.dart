@@ -6,6 +6,7 @@ class UserData extends Equatable {
   final String email;
   final String password;
   final String? picUrl;
+  final String? picPath;
   final List<String>? following;
   final List<String>? followers;
 
@@ -16,6 +17,7 @@ class UserData extends Equatable {
     required this.email,
     required this.password,
     this.picUrl,
+    this.picPath,
     this.following,
     this.followers,
   });
@@ -26,6 +28,7 @@ class UserData extends Equatable {
         email: null,
         password: null,
         picUrl: null,
+        picPath: null,
         following: null,
         followers: null,
       );
@@ -36,6 +39,7 @@ class UserData extends Equatable {
     String? email,
     String? password,
     String? picUrl,
+    String? picPath,
     List<String>? following,
     List<String>? followers,
   }) =>
@@ -43,6 +47,7 @@ class UserData extends Equatable {
         id: id ?? this.id,
         username: username ?? this.username,
         email: email ?? this.email,
+        picPath: picPath ?? this.picPath,
         password: password ?? this.password,
         picUrl: picUrl ?? this.picUrl,
         following: following ?? this.following,
@@ -56,6 +61,7 @@ class UserData extends Equatable {
         email,
         password,
         picUrl,
+        picPath,
         following,
         followers,
       ];
