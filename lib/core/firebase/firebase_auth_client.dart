@@ -21,10 +21,12 @@ class FirebaseAuthClient {
     required String email,
     required String password,
   }) async {
-    return await _firebaseAuth.createUserWithEmailAndPassword(
+    var a = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+    print('firebase auth user: $a');
+    return a;
   }
 
   Future<void> signOut() async {
