@@ -2,7 +2,6 @@ import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_not
 import 'package:flutter/material.dart';
 import 'package:soc_app/features/explore/presentation/explore_page.dart';
 import 'package:soc_app/features/post/presentation/page/create_post_page.dart';
-import 'package:soc_app/features/profile/registration/presentation/pages/register_page.dart';
 import 'package:soc_app/features/profile/registration/presentation/pages/user_profile_page.dart';
 import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
 
@@ -14,9 +13,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  /// Controller to handle PageView and also handles initial page
-  final _pageController = PageController(initialPage: 0);
-
   /// Controller to handle bottom nav bar and also handles initial page
   final _controller = NotchBottomBarController(index: 0);
 
@@ -24,13 +20,11 @@ class _AppState extends State<App> {
 
   @override
   void dispose() {
-    _pageController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
-    print('object');
     super.initState();
   }
 
@@ -45,7 +39,7 @@ class _AppState extends State<App> {
   int maxCount = 4;
   @override
   Widget build(BuildContext context) {
-    // return LoginPage();
+    // return StartupPage();
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       body: Center(
