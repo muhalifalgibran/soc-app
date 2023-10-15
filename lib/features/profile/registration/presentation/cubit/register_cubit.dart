@@ -5,11 +5,12 @@ import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/error/failure.dart';
 import 'package:soc_app/core/utils/domain/entities/user_data.dart';
 import 'package:soc_app/core/utils/general_status_state.dart';
+import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
 import 'package:soc_app/features/profile/registration/domain/usecases/create_user.dart';
 
 class RegisterState extends Equatable {
   final GeneralStatusState status;
-  final UserData? userData;
+  final SocUser? userData;
   final Failure? failure;
 
   const RegisterState({
@@ -20,7 +21,7 @@ class RegisterState extends Equatable {
 
   RegisterState copyWith({
     GeneralStatusState? status,
-    UserData? userData,
+    SocUser? userData,
     Failure? failure,
   }) =>
       RegisterState(

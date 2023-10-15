@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:soc_app/core/error/failure.dart';
 import 'package:soc_app/core/utils/domain/entities/user_data.dart';
 import 'package:soc_app/features/profile/registration/data/datasource/register_remote_datasource.dart';
+import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
 import 'package:soc_app/features/profile/registration/domain/repositories/register_repository.dart';
 
 // treat the repository as DAO
@@ -12,7 +13,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
   final RegisterRemoteDataSource dataSource;
 
   @override
-  Future<Either<Failure, UserData>> createUser(UserData userData) async {
+  Future<Either<Failure, SocUser>> createUser(UserData userData) async {
     try {
       final result = await dataSource.createUser(userData);
       return Right(result);

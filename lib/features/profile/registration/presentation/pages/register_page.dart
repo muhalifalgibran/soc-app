@@ -130,6 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             email: email!,
                             password: password!,
                             picPath: image?.path,
+                            username: username!,
                           );
                           // if (image?.path != null) {
                           //   userData.copyWith(picPath: image!.path);
