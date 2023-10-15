@@ -14,4 +14,12 @@ class PostModel extends Post {
           postPic: postPic ?? '',
           userId: userId ?? '',
         );
+
+  factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
+        id: json['id'],
+        caption: json['caption'],
+        tags: json['tags'].map<String>((e) => e.toString()).toList() ?? [],
+        postPic: json['post_pic'],
+        userId: json['user_id'],
+      );
 }

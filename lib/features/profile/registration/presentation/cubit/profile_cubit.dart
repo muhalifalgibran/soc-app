@@ -4,7 +4,9 @@ import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/error/failure.dart';
+import 'package:soc_app/features/post/domain/entities/post.dart';
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
+import 'package:soc_app/features/profile/registration/domain/usecases/get_posts.dart';
 import 'package:soc_app/features/profile/registration/domain/usecases/get_profile.dart';
 import 'package:soc_app/features/profile/registration/domain/usecases/logout_user.dart';
 
@@ -16,17 +18,20 @@ enum ProfileStatusState {
   successLogout,
   loadingLogout,
   successGetProfile,
+  successGetPosts,
 }
 
 class ProfileState extends Equatable {
   final ProfileStatusState status;
   final Failure? failure;
   final SocUser? user;
+  final List<Post>? posts;
 
   const ProfileState({
     this.status = ProfileStatusState.initial,
     this.failure,
     this.user,
+    this.posts,
   });
 
   bool get isLoading => status == ProfileStatusState.loading;
@@ -36,16 +41,19 @@ class ProfileState extends Equatable {
   bool get isLoadingLogout => status == ProfileStatusState.loadingLogout;
   bool get isSuccessGetProfile =>
       status == ProfileStatusState.successGetProfile;
+  bool get isSuccessGetPosts => status == ProfileStatusState.successGetPosts;
 
   ProfileState copyWith({
     ProfileStatusState? status,
     SocUser? user,
     Failure? failure,
+    List<Post>? posts,
   }) =>
       ProfileState(
         status: status ?? this.status,
         user: user ?? this.user,
         failure: failure ?? this.failure,
+        posts: posts ?? this.posts,
       );
 
   @override
@@ -53,6 +61,7 @@ class ProfileState extends Equatable {
         status,
         failure,
         user,
+        posts,
       ];
 }
 
@@ -106,5 +115,39 @@ class ProfileCubit extends Cubit<ProfileState> {
         );
       },
     );
+  }
+
+  void getPosts() async {
+    emit(state.copyWith(status: ProfileStatusState.loading));
+    String? userId;
+    var box = await Hive.openBox('userStatus');
+    userId = box.get('userUid');
+    box.close();
+    // get posts by userid
+    if (userId != '') {
+      final getUser = await getIt<GetPosts>().call(userId!);
+
+      getUser.fold(
+        (error) => emit(
+          state.copyWith(
+            status: ProfileStatusState.failed,
+            failure: error,
+          ),
+        ),
+        (data) {
+          emit(
+            state.copyWith(
+              status: ProfileStatusState.successGetPosts,
+              posts: data,
+            ),
+          );
+        },
+      );
+    } else {
+      emit(state.copyWith(
+        status: ProfileStatusState.failed,
+        failure: const ClientFailure(message: 'Failed to get user id'),
+      ));
+    }
   }
 }

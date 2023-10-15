@@ -24,6 +24,18 @@ class NetworkFailure extends Failure {
   String toString() => 'NetworkFailure($message)';
 }
 
+class ClientFailure extends Failure {
+  const ClientFailure({
+    super.message = 'Seems you have a problem',
+  });
+
+  @override
+  List<Object?> get props => [message];
+
+  @override
+  String toString() => 'ClientFailure($message)';
+}
+
 class ServerFailure extends Failure {
   const ServerFailure({
     super.message = 'Server Error',

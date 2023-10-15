@@ -11,7 +11,9 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ProfileCubit>(
-      create: (context) => getIt<ProfileCubit>()..getProfile(),
+      create: (context) => getIt<ProfileCubit>()
+        ..getProfile()
+        ..getPosts(),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

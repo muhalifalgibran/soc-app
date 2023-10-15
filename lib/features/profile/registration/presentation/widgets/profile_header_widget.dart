@@ -43,7 +43,7 @@ class ProfileHeadWidget extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state.isSuccessGetProfile) {
+        if (state.isSuccessGetProfile || state.isSuccessGetPosts) {
           return Container(
             padding: const EdgeInsets.only(
               left: 20,
