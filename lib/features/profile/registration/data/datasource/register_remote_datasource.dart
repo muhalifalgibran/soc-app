@@ -28,8 +28,9 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
       email: data.email,
       password: data.password,
     )
-        .whenComplete(() async {
+        .then((credential) async {
       // make sure the auth is done, then
+      // get user uid for the id in db
       // upload the avatar
       if (data.picPath != null) {
         final file = File(data.picPath!);
@@ -39,7 +40,7 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
       // insert to graphQL
 
       var mutation = """mutation MyMutation {
-        insert_users(objects: {email: "${data.email}", pic_url: "$downloadUrl", username: "${data.username}"}) {
+        insert_users(objects: {auth_uid: "${credential.user?.uid}" ,email: "${data.email}", pic_url: "$downloadUrl", username: "${data.username}"}) {
           returning {
             email
             followee

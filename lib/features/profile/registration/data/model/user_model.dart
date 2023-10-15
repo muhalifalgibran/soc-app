@@ -1,20 +1,13 @@
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
 
 class UserModel extends SocUser {
-  final String username;
-  final String? picUrl;
-  final String id;
-  final String email;
-  final List<String> followee;
-  final List<String> following;
-
   const UserModel({
-    required this.username,
-    required this.picUrl,
-    required this.id,
-    required this.email,
-    required this.followee,
-    required this.following,
+    required String username,
+    required String? picUrl,
+    required String id,
+    required String email,
+    required List<String> followee,
+    required List<String> following,
   }) : super(
           username: username,
           picUrl: picUrl,
@@ -31,7 +24,7 @@ class UserModel extends SocUser {
       id: json['id'] ?? '',
       email: json['email'] ?? '',
       followee: json['followee'] ?? [],
-      following: json['follower'] ?? [],
+      following: json['following'] ?? [],
     );
   }
 }

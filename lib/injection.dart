@@ -3,6 +3,8 @@ import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/features/profile/registration/presentation/cubit/register_cubit.dart';
 import 'package:soc_app/features/startup/presentation/cubit/startup_cubit.dart';
 
+import 'features/profile/registration/presentation/cubit/login_cubit.dart';
+
 class Injection {
   Injection._privateConstructor();
 
@@ -16,6 +18,9 @@ class Injection {
         ),
         BlocProvider<StartupCubit>(
           create: (context) => getIt<StartupCubit>(),
+        ),
+        BlocProvider<LoginCubit>(
+          create: (context) => getIt<LoginCubit>(),
         ),
       ];
 }
