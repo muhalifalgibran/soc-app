@@ -18,4 +18,14 @@ class PostRepositoryImpl implements PostRepository {
       return Left(ServerFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<String>>> getTags(String username) async {
+    try {
+      final result = await _dataSource.getTags(username);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
 }

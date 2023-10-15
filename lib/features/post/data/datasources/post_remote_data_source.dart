@@ -9,6 +9,7 @@ import 'package:soc_app/features/post/domain/entities/post.dart';
 abstract class PostRemoteDataSource {
   Future<void> createPost(Post post);
   Future<void> getPosts(String userId);
+  Future<List<String>> getTags(String username);
 }
 
 @LazySingleton(as: PostRemoteDataSource)
@@ -42,5 +43,21 @@ class PostRemoteDataSourceImpl extends PostRemoteDataSource {
   Future<void> getPosts(String userId) {
     // TODO: implement getPosts
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<String>> getTags(String username) async {
+    String query = """query MyQuery {
+        users(where: {username: {_iregex: "$username"}}) {
+          username
+        }
+      }
+
+    """;
+    final result = await _graphQLModule.queryMethod(query);
+    print(result['users'].map((e) => e['username'].toString()).toList());
+    return result['users']
+        .map<String>((e) => e['username'].toString())
+        .toList();
   }
 }

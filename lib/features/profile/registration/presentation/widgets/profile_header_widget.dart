@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soc_app/core/di/service_locator.dart';
-import 'package:soc_app/features/profile/registration/presentation/cubit/login_cubit.dart';
 import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
 import 'package:soc_app/features/profile/registration/presentation/pages/login_page.dart';
 import 'package:soc_app/widgets/soc_button.dart';
@@ -93,7 +92,7 @@ class ProfileHeadWidget extends StatelessWidget {
                               children: [
                                 Text('${state.user?.posts.length}'),
                                 const SizedBox(height: 4),
-                                const Text('Posts'),
+                                const Text('posts'),
                               ],
                             ),
                             const SizedBox(
@@ -104,7 +103,7 @@ class ProfileHeadWidget extends StatelessWidget {
                               children: [
                                 Text('${state.user?.followee.length}'),
                                 const SizedBox(height: 4),
-                                const Text('Followers'),
+                                const Text('followers'),
                               ],
                             ),
                             const SizedBox(
@@ -115,7 +114,7 @@ class ProfileHeadWidget extends StatelessWidget {
                               children: [
                                 Text('${state.user?.following.length}'),
                                 const SizedBox(height: 4),
-                                const Text('Following'),
+                                const Text('following'),
                               ],
                             ),
                           ],
@@ -125,13 +124,16 @@ class ProfileHeadWidget extends StatelessWidget {
                         ),
                         isCurrentUser
                             ? SocButton(
-                                width: 100,
-                                height: 40,
+                                width: 80,
+                                height: 30,
                                 onPressed: () {
                                   getIt<ProfileCubit>().logout();
                                 },
                                 color: Colors.red.shade300,
-                                label: 'Logout',
+                                label: 'logout',
+                                labelStyle: const TextStyle(
+                                  fontSize: 12,
+                                ),
                               )
                             : SocButton(
                                 width: 100,

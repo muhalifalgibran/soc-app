@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:soc_app/core/di/service_locator.dart';
+import 'package:soc_app/features/post/presentation/cubits/post_cubit.dart';
+import 'package:soc_app/features/post/presentation/cubits/tag_cubit.dart';
 import 'package:soc_app/widgets/soc_button.dart';
+
+import '../../../../core/utils/debouncer.dart';
 
 class AddTagWidget extends StatefulWidget {
   const AddTagWidget({required this.tags, super.key});
@@ -11,6 +17,8 @@ class AddTagWidget extends StatefulWidget {
 }
 
 class _AddTagWidgetState extends State<AddTagWidget> {
+  final cubit = getIt<TagCubit>();
+
   List<String> usernames = [];
   final _formKey = GlobalKey<FormState>();
   String? valueAdd;
@@ -41,49 +49,87 @@ class _AddTagWidgetState extends State<AddTagWidget> {
   }
 
   void addTagDialog(BuildContext context) async {
+    final Debouncer _debounce = Debouncer(const Duration(milliseconds: 300));
     return showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            // set height by ratio of height
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Column(
-              children: [
-                Form(
-                  key: _formKey,
-                  child: TextFormField(
-                    onChanged: (value) {
-                      valueAdd = value;
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a username';
-                      } else if (!value.contains(RegExp(r'^@[^@]*$'))) {
-                        return 'Please valid username';
-                      }
-                      return null;
-                    },
+          child: BlocProvider<TagCubit>(
+            create: (context) => cubit,
+            child: BlocBuilder<TagCubit, TagState>(
+              bloc: cubit,
+              builder: (context, state) {
+                return Container(
+                  padding: const EdgeInsets.all(12),
+                  // set height by ratio of height
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: Column(
+                    children: [
+                      Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          initialValue: '',
+                          onChanged: (value) {
+                            valueAdd = value;
+                            // with debouncer so we're not calling our API
+                            // per word. it will be much efficient
+                            _debounce.call(
+                              () => cubit.getTags(value),
+                            );
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a username';
+                            } else if (!value.contains(RegExp(r'^@[^@]*$'))) {
+                              return 'Please valid username';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      if (state.usernames != null && state.isSuccess)
+                        Expanded(
+                            child: SingleChildScrollView(
+                          child: Column(
+                            children: List.generate(
+                              state.usernames!.length,
+                              (index) => GestureDetector(
+                                onTap: () {
+                                  usernames.add(state.usernames![index]);
+                                  widget.tags(usernames);
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(4),
+                                  color: Colors.grey.shade100,
+                                  padding: const EdgeInsets.all(4),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 1,
+                                        color: Colors.grey,
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.all(8.0),
+                                        child:
+                                            Text('@${state.usernames![index]}'),
+                                      ),
+                                      Container(
+                                        height: 1,
+                                        color: Colors.grey,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 8),
-                SocButton(
-                  width: 80,
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (valueAdd != null) {
-                        Navigator.of(context).pop();
-                        setState(() {
-                          usernames.add(valueAdd!);
-                        });
-                        widget.tags(usernames);
-                      }
-                    }
-                  },
-                  label: 'add',
-                )
-              ],
+                );
+              },
             ),
           ),
         );

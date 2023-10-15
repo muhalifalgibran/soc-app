@@ -5,6 +5,7 @@ import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/error/failure.dart';
 import 'package:soc_app/features/post/domain/entities/post.dart';
 import 'package:soc_app/features/post/domain/usecases/create_post.dart';
+import 'package:soc_app/features/post/domain/usecases/get_tags.dart';
 
 enum PostStatusState {
   initial,
@@ -16,10 +17,12 @@ enum PostStatusState {
 class PostState extends Equatable {
   final PostStatusState status;
   final Failure? failure;
+  final List<String>? usernames;
 
   const PostState({
     this.status = PostStatusState.initial,
     this.failure,
+    this.usernames,
   });
 
   bool get isLoading => status == PostStatusState.loading;
@@ -29,16 +32,19 @@ class PostState extends Equatable {
   PostState copyWith({
     PostStatusState? status,
     Failure? failure,
+    List<String>? usernames,
   }) =>
       PostState(
         status: status ?? this.status,
         failure: failure ?? this.failure,
+        usernames: usernames ?? this.usernames,
       );
 
   @override
   List<Object?> get props => [
         status,
         failure,
+        usernames,
       ];
 }
 
