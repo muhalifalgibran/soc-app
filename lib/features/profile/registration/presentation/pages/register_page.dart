@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,113 +34,165 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
+  void showLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: const CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void showSuccessAdd() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              'Success register user',
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade300,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              child: const NeuContainer(
-                backgroundColor: Colors.black54,
-                child: Text(
-                  'Register your profile',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.white,
+    return BlocListener<RegisterCubit, RegisterState>(
+      bloc: getIt<RegisterCubit>(),
+      listener: (context, state) {
+        if (state.isSuccess) {
+          // pop loading
+          Navigator.of(context).pop();
+
+          // show success add dialog
+          showSuccessAdd();
+          // Navigator.of(context).pop();
+
+          // navigate back to login
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey.shade300,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                child: const NeuContainer(
+                  backgroundColor: Colors.black54,
+                  child: Text(
+                    'Register your profile',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: NeuContainer(
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        showImageDialog(context);
-                      },
-                      child: SocCircularImage(
-                        height: 72,
-                        width: 72,
-                        child: image?.path != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(72 * 0.5),
-                                child: Image.file(
-                                  File(image!.path),
-                                  fit: BoxFit.cover,
+              const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: NeuContainer(
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          showImageDialog(context);
+                        },
+                        child: SocCircularImage(
+                          height: 72,
+                          width: 72,
+                          child: image?.path != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(72 * 0.5),
+                                  child: Image.file(
+                                    File(image!.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : const Center(
+                                  child: Text(
+                                    'add avatar',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
                                 ),
-                              )
-                            : const Center(
-                                child: Text(
-                                  'add avatar',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    SocForm(
-                      label: 'Email',
-                      onChanged: (value) {
-                        setState(() {
-                          email = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    SocForm(
-                      label: 'Username',
-                      onChanged: (value) {
-                        setState(() {
-                          username = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    SocForm(
-                      label: 'Password',
-                      obscure: true,
-                      onChanged: (value) {
-                        setState(() {
-                          password = value;
-                        });
-                      },
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      SocForm(
+                        label: 'Email',
+                        onChanged: (value) {
+                          setState(() {
+                            email = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      SocForm(
+                        label: 'Username',
+                        onChanged: (value) {
+                          setState(() {
+                            username = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      SocForm(
+                        label: 'Password',
+                        obscure: true,
+                        onChanged: (value) {
+                          setState(() {
+                            password = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            SocButton(
-              onPressed:
-                  (username != null) || (password != null) || (email != null)
-                      ? () {
-                          print('image pathnya ${image?.path}');
-                          UserData userData = UserData(
-                            email: email!,
-                            password: password!,
-                            picPath: image?.path,
-                            username: username!,
-                          );
-                          // if (image?.path != null) {
-                          //   userData.copyWith(picPath: image!.path);
-                          // }
-                          getIt<RegisterCubit>().createUser(userData);
-                        }
-                      : null,
-              label: 'Register',
-              color: Colors.blue.shade100,
-            ),
-          ],
+              const SizedBox(height: 20),
+              SocButton(
+                onPressed:
+                    (username != null) || (password != null) || (email != null)
+                        ? () async {
+                            showLoading();
+                            UserData userData = UserData(
+                              email: email!,
+                              password: password!,
+                              picPath: image?.path,
+                              username: username!,
+                            );
+                            await getIt<RegisterCubit>().createUser(userData);
+                            Navigator.of(context).pop();
+                          }
+                        : () {
+                            showLoading();
+                          },
+                label: 'Register',
+                color: Colors.blue.shade100,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -26,14 +26,16 @@ class _StartupPageState extends State<StartupPage> {
       listener: (context, state) async {
         if (state.isSuccess) {
           await Future.delayed(const Duration(milliseconds: 750), () {
-            Navigator.push(
+            // push replacement, since we want to remove the
+            // splash screen page
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const App()),
             );
           });
         } else {
           await Future.delayed(const Duration(milliseconds: 750), () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const LoginPage()),
             );

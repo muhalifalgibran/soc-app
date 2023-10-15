@@ -19,6 +19,10 @@ class RegisterState extends Equatable {
     this.failure,
   });
 
+  bool get isLoading => status == GeneralStatusState.loading;
+  bool get isSuccess => status == GeneralStatusState.success;
+  bool get isFailed => status == GeneralStatusState.failed;
+
   RegisterState copyWith({
     GeneralStatusState? status,
     SocUser? userData,
