@@ -37,7 +37,7 @@ class _StartupPageState extends State<StartupPage> {
           await Future.delayed(const Duration(milliseconds: 750), () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const LoginPage()),
+              MaterialPageRoute(builder: (context) => LoginPage()),
             );
           });
         }
