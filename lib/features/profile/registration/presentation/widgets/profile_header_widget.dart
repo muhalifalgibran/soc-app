@@ -32,7 +32,7 @@ class ProfileHeadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProfileCubit, ProfileState>(
+    return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
         if (state.isLoadingLogout) {
           showLoading(context);
@@ -43,96 +43,112 @@ class ProfileHeadWidget extends StatelessWidget {
           );
         }
       },
-      child: Container(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 80,
-          bottom: 20,
-        ),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      builder: (context, state) {
+        if (state.isSuccessGetProfile) {
+          return Container(
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 80,
+              bottom: 20,
+            ),
+            child: Column(
               children: [
-                const SocCircularImage(height: 72, width: 72),
-                const SizedBox(
-                  width: 21,
-                ),
-                Column(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '@username',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
+                    SocCircularImage(
+                        height: 72,
+                        width: 72,
+                        child: state.user?.picUrl != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(72 * 0.5),
+                                child: Image.network(
+                                  state.user!.picUrl!,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : null),
                     const SizedBox(
-                      height: 21,
+                      width: 21,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // post
-                        Column(
+                        Text(
+                          '@${state.user?.username}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 21,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('29'),
-                            SizedBox(height: 4),
-                            Text('Posts'),
+                            // post
+                            Column(
+                              children: [
+                                Text('${state.user?.posts.length}'),
+                                const SizedBox(height: 4),
+                                const Text('Posts'),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            // Followers
+                            Column(
+                              children: [
+                                Text('${state.user?.followee.length}'),
+                                const SizedBox(height: 4),
+                                const Text('Followers'),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            // following
+                            Column(
+                              children: [
+                                Text('${state.user?.following.length}'),
+                                const SizedBox(height: 4),
+                                const Text('Following'),
+                              ],
+                            ),
                           ],
                         ),
                         const SizedBox(
-                          width: 12,
+                          height: 20,
                         ),
-                        // Followers
-                        Column(
-                          children: [
-                            Text('12'),
-                            SizedBox(height: 4),
-                            Text('Followers'),
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        // following
-                        Column(
-                          children: [
-                            Text('0'),
-                            SizedBox(height: 4),
-                            Text('Following'),
-                          ],
-                        ),
+                        isCurrentUser
+                            ? SocButton(
+                                width: 100,
+                                height: 40,
+                                onPressed: () {
+                                  getIt<ProfileCubit>().logout();
+                                },
+                                color: Colors.red.shade300,
+                                label: 'Logout',
+                              )
+                            : SocButton(
+                                width: 100,
+                                height: 40,
+                                onPressed: () {},
+                                label: 'Follow',
+                              ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    isCurrentUser
-                        ? SocButton(
-                            width: 100,
-                            height: 40,
-                            onPressed: () {
-                              getIt<ProfileCubit>().logout();
-                            },
-                            color: Colors.red.shade300,
-                            label: 'Logout',
-                          )
-                        : SocButton(
-                            width: 100,
-                            height: 40,
-                            onPressed: () {},
-                            label: 'Follow',
-                          ),
                   ],
-                ),
+                )
               ],
-            )
-          ],
-        ),
-      ),
+            ),
+          );
+        }
+        return Container();
+      },
     );
   }
 }

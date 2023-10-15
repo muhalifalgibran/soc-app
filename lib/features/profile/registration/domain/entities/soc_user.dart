@@ -7,6 +7,7 @@ class SocUser extends Equatable {
   final String email;
   final List<String> followee;
   final List<String> following;
+  final List<String> posts;
 
   const SocUser({
     required this.username,
@@ -15,6 +16,7 @@ class SocUser extends Equatable {
     required this.email,
     required this.followee,
     required this.following,
+    required this.posts,
   });
 
   @override
@@ -24,6 +26,7 @@ class SocUser extends Equatable {
         id,
         email,
         followee,
+        posts,
         following,
       ];
 }

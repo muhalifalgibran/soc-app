@@ -8,6 +8,7 @@ class UserModel extends SocUser {
     required String email,
     required List<String> followee,
     required List<String> following,
+    required List<String> post,
   }) : super(
           username: username,
           picUrl: picUrl,
@@ -15,6 +16,7 @@ class UserModel extends SocUser {
           email: email,
           followee: followee,
           following: following,
+          posts: post,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class UserModel extends SocUser {
       email: json['email'] ?? '',
       followee: json['followee'] ?? [],
       following: json['following'] ?? [],
+      post: json['posts'] ?? [],
     );
   }
 }

@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
         return Dialog(
           child: Container(
             padding: const EdgeInsets.all(20),
-            child: Text(
+            child: const Text(
               'Success register user',
             ),
           ),
