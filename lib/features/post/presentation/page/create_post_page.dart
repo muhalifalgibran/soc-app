@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:soc_app/core/di/service_locator.dart';
+import 'package:soc_app/core/utils/debouncer.dart';
 import 'package:soc_app/features/post/domain/entities/post.dart';
 import 'package:soc_app/features/post/presentation/cubits/post_cubit.dart';
 import 'package:soc_app/features/post/presentation/cubits/tag_cubit.dart';
@@ -25,8 +26,12 @@ class _CreatePostPageState extends State<CreatePostPage> {
   List<String> usernames = [];
 
   final ImagePicker picker = ImagePicker();
+  final _tagCubit = getIt<TagCubit>();
 
   bool isOpenMention = false;
+  String mentioned = '';
+
+  final Debouncer _debounce = Debouncer(const Duration(milliseconds: 300));
 
   //we can upload image from camera or from gallery based on parameter
   Future getImage(ImageSource media) async {
@@ -68,8 +73,15 @@ class _CreatePostPageState extends State<CreatePostPage> {
   Widget build(BuildContext context) {
     final isResetActive =
         image?.path != null || usernames.isNotEmpty || captions.text != '';
-    return BlocProvider(
-      create: (context) => getIt<PostCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<PostCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => _tagCubit,
+        ),
+      ],
       child: BlocListener<PostCubit, PostState>(
         listener: (context, state) {
           if (state.isSuccess) {
@@ -183,15 +195,32 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         controller: captions,
                         onChanged: (value) {
                           // trigger the container if the
-                          // last word is '@' character
-                          var lastWord = value.split('').last;
-                          if (lastWord == '@') {
-                            setState(() {
-                              print('ada @');
-                              isOpenMention = true;
-                            });
-                          } else if (isOpenMention == true && lastWord != '@') {
-                            // make it invicible when undo
+                          if (value != '') {
+                            var lastWord = value.split('').last;
+                            if (lastWord == '@') {
+                              setState(() {
+                                isOpenMention = true;
+                              });
+                            } else if (isOpenMention == true &&
+                                lastWord == ' ') {
+                              // make it invicible when undo
+                              setState(() {
+                                isOpenMention = false;
+                              });
+                            }
+                            // pattern to get from @ until first space
+                            RegExp regex = RegExp(r'@([^ ]+)');
+
+                            // Find the fist that match
+                            Iterable<Match>? matches = regex.allMatches(value);
+
+                            for (Match match in matches) {
+                              String? username = match.group(1);
+                              _debounce.call(() {
+                                _tagCubit.getTags(username ?? '');
+                              });
+                            }
+                          } else {
                             setState(() {
                               isOpenMention = false;
                             });
@@ -226,6 +255,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ],
                 ),
               ),
+              // Container for the mentioned usernames
               Visibility(
                 visible: isOpenMention,
                 child: Align(
@@ -237,10 +267,15 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     ),
                     height: 300,
                     width: 280,
-                    child: BlocBuilder<TagCubit, TagState>(
-                      builder: (context, state) {
-                        return mentionUsernames(state);
-                      },
+                    padding: EdgeInsets.all(8),
+                    child: BlocProvider(
+                      create: (context) => _tagCubit,
+                      child: BlocBuilder<TagCubit, TagState>(
+                        bloc: _tagCubit,
+                        builder: (context, state) {
+                          return mentionUsernames(state);
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -254,15 +289,28 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
   Widget mentionUsernames(TagState state) {
     if (state.usernames != null) {
-      return Expanded(
-          child: SingleChildScrollView(
+      return SingleChildScrollView(
         child: Column(
           children: List.generate(
             state.usernames!.length,
             (index) => GestureDetector(
               onTap: () {
-                usernames.add(state.usernames![index]);
-                Navigator.of(context).pop();
+                // Regex pattern start from last until first space from last
+                RegExp regex = RegExp(r'\S+\s\@\w+$');
+
+                // Pola regex untuk mencocokkan dari akhir string hingga spasi pertama
+                RegExp regexGetLastWord = RegExp(r' (\S+)$');
+
+                RegExpMatch? match = regexGetLastWord.firstMatch(captions.text);
+
+                if (match != null) {
+                  String? substring = match.group(1);
+                  String newText = replaceText(captions.text, substring ?? '',
+                      '@${state.usernames![index]}');
+                  captions.text = newText;
+                } else {
+                  print("No Match");
+                }
               },
               child: Container(
                 margin: const EdgeInsets.all(4),
@@ -288,7 +336,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
             ),
           ),
         ),
-      ));
+      );
     }
     return Container();
   }
@@ -329,5 +377,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
         );
       },
     );
+  }
+
+  String replaceText(String text, String toReplace, String newWord) {
+    return text.replaceAll(toReplace, newWord);
   }
 }

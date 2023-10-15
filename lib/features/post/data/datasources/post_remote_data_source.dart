@@ -19,13 +19,11 @@ class PostRemoteDataSourceImpl extends PostRemoteDataSource {
 
   @override
   Future<void> createPost(Post post) async {
-    String downloadUrl = '';
-
     final file = File(post.postPic);
     // save the picture to firebase store and put it by userId
-    downloadUrl = await _firebaseStorageClient
+    await _firebaseStorageClient
         .uploadAvatars(file, 'posts/${post.userId}')
-        .whenComplete(() async {
+        .then((downloadUrl) async {
       // save to Hasura after complete upload the pic
       var mutation = """mutation MyMutation {
       insert_posts(objects: {caption: "${post.caption}", post_pic: "$downloadUrl", tags: ${post.tags}, user_id: "${post.userId}"}) {
