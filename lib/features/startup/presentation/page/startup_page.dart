@@ -42,7 +42,7 @@ class _StartupPageState extends State<StartupPage> {
           });
         }
       },
-      child: Scaffold(
+      child: const Scaffold(
         body: Center(
           child: NeuContainer(
             child: Text(

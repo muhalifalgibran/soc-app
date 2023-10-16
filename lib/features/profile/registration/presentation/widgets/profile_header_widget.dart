@@ -90,7 +90,7 @@ class ProfileHeadWidget extends StatelessWidget {
                             // post
                             Column(
                               children: [
-                                Text('${state.user?.posts.length}'),
+                                Text('${state.posts?.length}'),
                                 const SizedBox(height: 4),
                                 const Text('posts'),
                               ],

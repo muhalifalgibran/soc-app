@@ -24,7 +24,15 @@ class UserProfilePage extends StatelessWidget {
               color: Colors.grey,
               margin: const EdgeInsets.only(bottom: 2),
             ),
-            const ImageGridWidget(),
+            BlocBuilder<ProfileCubit, ProfileState>(
+              bloc: getIt<ProfileCubit>(),
+              builder: (context, state) {
+                if (state.isSuccessGetPosts) {
+                  return ImageGridWidget(state.posts ?? []);
+                }
+                return Container();
+              },
+            ),
           ],
         ),
       ),

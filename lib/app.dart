@@ -1,6 +1,6 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:soc_app/features/explore/presentation/explore_page.dart';
+import 'package:soc_app/features/explore/presentation/pages/explore_page.dart';
 import 'package:soc_app/features/post/presentation/page/create_post_page.dart';
 import 'package:soc_app/features/profile/registration/presentation/pages/user_profile_page.dart';
 import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
