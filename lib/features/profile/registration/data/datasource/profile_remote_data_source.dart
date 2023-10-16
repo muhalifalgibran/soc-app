@@ -12,7 +12,7 @@ abstract class ProfileRemoteDataSource {
   Future<List<Post>> getPosts(String userId);
 }
 
-@LazySingleton(as: ProfileRemoteDataSource)
+@Injectable(as: ProfileRemoteDataSource)
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   final _module = getIt<GraphQLModule>();
   @override

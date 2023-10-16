@@ -10,6 +10,7 @@ import 'package:soc_app/features/post/domain/entities/post.dart';
 import 'package:soc_app/features/post/presentation/cubits/post_cubit.dart';
 import 'package:soc_app/features/post/presentation/cubits/tag_cubit.dart';
 import 'package:soc_app/features/post/presentation/widgets/add_tag_widget.dart';
+import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
 import 'package:soc_app/widgets/neu_container.dart';
 import 'package:soc_app/widgets/soc_button.dart';
 
@@ -225,6 +226,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               isOpenMention = false;
                             });
                           }
+                          setState(() {});
                         },
                         maxLines: 4,
                         decoration: const InputDecoration.collapsed(
@@ -245,7 +247,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               final post = Post(
                                   caption: captions.text,
                                   postPic: image?.path ?? '',
-                                  tags: usernames,
+                                  tags: usernames != [] ? usernames : null,
                                   userId: userId);
                               getIt<PostCubit>().createPost(post);
                             }

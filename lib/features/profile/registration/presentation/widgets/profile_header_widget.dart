@@ -7,8 +7,10 @@ import 'package:soc_app/widgets/soc_button.dart';
 import 'package:soc_app/widgets/soc_circular_image.dart';
 
 class ProfileHeadWidget extends StatelessWidget {
-  const ProfileHeadWidget({this.isCurrentUser = true, super.key});
+  ProfileHeadWidget({this.isCurrentUser = true, super.key});
   final bool isCurrentUser;
+  final _cubit = getIt<ProfileCubit>();
+  bool withLoading = false;
 
   void showLoading(BuildContext context) {
     showDialog(
@@ -82,7 +84,7 @@ class ProfileHeadWidget extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          height: 21,
+                          height: 18,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +129,7 @@ class ProfileHeadWidget extends StatelessWidget {
                                 width: 80,
                                 height: 30,
                                 onPressed: () {
-                                  getIt<ProfileCubit>().logout();
+                                  _cubit.logout();
                                 },
                                 color: Colors.red.shade300,
                                 label: 'logout',

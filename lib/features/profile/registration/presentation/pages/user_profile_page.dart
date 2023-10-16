@@ -18,14 +18,13 @@ class UserProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ProfileHeadWidget(),
+            ProfileHeadWidget(),
             Container(
               height: 1,
               color: Colors.grey,
               margin: const EdgeInsets.only(bottom: 2),
             ),
             BlocBuilder<ProfileCubit, ProfileState>(
-              bloc: getIt<ProfileCubit>(),
               builder: (context, state) {
                 if (state.isSuccessGetPosts) {
                   return ImageGridWidget(state.posts ?? []);

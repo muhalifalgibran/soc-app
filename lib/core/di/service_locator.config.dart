@@ -103,7 +103,7 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i22.PostRemoteDataSourceImpl());
     gh.lazySingleton<_i23.PostRepository>(() => _i24.PostRepositoryImpl());
     gh.lazySingleton<_i25.ProfileCubit>(() => _i25.ProfileCubit());
-    gh.lazySingleton<_i26.ProfileRemoteDataSource>(
+    gh.factory<_i26.ProfileRemoteDataSource>(
         () => _i26.ProfileRemoteDataSourceImpl());
     gh.lazySingleton<_i27.ProfileRepository>(
         () => _i28.ProfileRepositoryImpl());

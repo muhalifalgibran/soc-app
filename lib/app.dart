@@ -29,7 +29,7 @@ class _AppState extends State<App> {
   }
 
   /// widget list
-  final List<Widget> bottomBarPages = const [
+  final List<Widget> bottomBarPages = [
     YourPage(),
     CreatePostPage(),
     ExplorePage(),
