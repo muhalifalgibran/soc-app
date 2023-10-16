@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/features/explore/presentation/cubits/detail_profile_post_cubit.dart';
 import 'package:soc_app/features/explore/presentation/cubits/explore_cubit.dart';
+import 'package:soc_app/features/explore/presentation/cubits/follow_unfollow_cubit.dart';
 import 'package:soc_app/features/explore/presentation/pages/detail_user_page.dart';
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
 import 'package:soc_app/widgets/neu_container.dart';
@@ -33,37 +34,23 @@ class _ExplorePageState extends State<ExplorePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => getIt<ExploreCubit>()..getUsers(),
-        ),
-        // provide the detail user here
-        // because will cause concurrency issue if
-        // we put the provider in detail user page
-        // when re enter the page.
-        BlocProvider(
-          create: (context) => getIt<DetailProfilePostCubit>(),
-        ),
-      ],
-      child: BlocBuilder<ExploreCubit, ExploreState>(
-        builder: (context, state) {
-          if (state.isSuccess) {
-            return SingleChildScrollView(
-              child: Column(
-                  children: List.generate(state.users!.length, (index) {
-                return _PeopleList(
-                  state.users![index],
-                  index == state.users!.length - 1,
-                  index == 0,
-                  currentUserId,
-                );
-              })),
-            );
-          }
-          return Container();
-        },
-      ),
+    return BlocBuilder<ExploreCubit, ExploreState>(
+      builder: (context, state) {
+        if (state.isSuccess) {
+          return SingleChildScrollView(
+            child: Column(
+                children: List.generate(state.users!.length, (index) {
+              return _PeopleList(
+                state.users![index],
+                index == state.users!.length - 1,
+                index == 0,
+                currentUserId,
+              );
+            })),
+          );
+        }
+        return Container();
+      },
     );
   }
 }
@@ -115,7 +102,7 @@ class _PeopleList extends StatelessWidget {
                   child: NeuContainer(
                     backgroundColor: Colors.white,
                     child: user.isInFollowing(currentUserId)
-                        ? const Text('follow')
+                        ? const Text('unfollow')
                         : const Text('follow'),
                   ),
                 ),

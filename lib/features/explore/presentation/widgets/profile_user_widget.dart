@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:soc_app/core/di/service_locator.dart';
+import 'package:soc_app/features/explore/presentation/cubits/follow_unfollow_cubit.dart';
 import 'package:soc_app/features/post/domain/entities/post.dart';
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
 import 'package:soc_app/widgets/soc_button.dart';
@@ -6,9 +8,11 @@ import 'package:soc_app/widgets/soc_button.dart';
 import '../../../../widgets/soc_circular_image.dart';
 
 class ProfileUserWidget extends StatelessWidget {
-  const ProfileUserWidget(this.user, this.posts, {super.key});
+  const ProfileUserWidget(this.user, this.posts, this.currentUserId,
+      {super.key});
   final SocUser user;
   final List<Post> posts;
+  final String currentUserId;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -89,12 +93,29 @@ class ProfileUserWidget extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  SocButton(
-                    width: 100,
-                    height: 40,
-                    onPressed: () {},
-                    label: 'Follow',
-                  ),
+                  user.isInFollowing(currentUserId)
+                      ? SocButton(
+                          width: 100,
+                          height: 40,
+                          onPressed: () {
+                            if (user.authUid != '') {
+                              getIt<FollowUnfollowCubit>()
+                                  .unfollow(user.authUid!);
+                            }
+                          },
+                          label: 'unfollow',
+                        )
+                      : SocButton(
+                          width: 100,
+                          height: 40,
+                          onPressed: () {
+                            if (user.authUid != '') {
+                              getIt<FollowUnfollowCubit>()
+                                  .follow(user.authUid!);
+                            }
+                          },
+                          label: 'follow',
+                        ),
                 ],
               ),
             ],

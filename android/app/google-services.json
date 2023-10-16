@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "876600238462",
-    "project_id": "social-app-9c217",
-    "storage_bucket": "social-app-9c217.appspot.com"
+    "project_number": "150264977399",
+    "project_id": "social-media-app-eec9a",
+    "storage_bucket": "social-media-app-eec9a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:876600238462:android:68286768678474a5ce132f",
+        "mobilesdk_app_id": "1:150264977399:android:30c59f96b87f1fa2c880f2",
         "android_client_info": {
           "package_name": "com.example.soc_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC_TvirIWpQFj7TqoZPxZ_gTc2v4AgNatw"
+          "current_key": "AIzaSyAUlixT1EWHniseIDWOlFv3tG9WoZ4lgYI"
         }
       ],
       "services": {

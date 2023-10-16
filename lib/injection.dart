@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soc_app/core/di/service_locator.dart';
+import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
 import 'package:soc_app/features/profile/registration/presentation/cubit/register_cubit.dart';
 import 'package:soc_app/features/startup/presentation/cubit/startup_cubit.dart';
 
@@ -21,6 +22,9 @@ class Injection {
         ),
         BlocProvider<LoginCubit>(
           create: (context) => getIt<LoginCubit>(),
+        ),
+        BlocProvider<ProfileCubit>(
+          create: (context) => getIt<ProfileCubit>(),
         ),
       ];
 }

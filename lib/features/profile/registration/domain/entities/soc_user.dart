@@ -11,18 +11,15 @@ class SocUser extends Equatable {
   final List<String> following;
   final List<String> posts;
 
-  Future<bool> get isInFollowers async {
-    var box = await Hive.openBox('userStatus');
-    String userId = box.get('userUid');
-
-    if (followee.contains(userId)) {
+  bool isInFollowers(String userId) {
+    if (following.contains(userId)) {
       return true;
     }
     return false;
   }
 
   bool isInFollowing(String userId) {
-    if (following.contains(userId)) {
+    if (followee.contains(userId)) {
       return true;
     }
     return false;

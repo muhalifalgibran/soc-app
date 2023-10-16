@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
         if (state.isLoading) {
           showLoading(context);
         } else if (state.isSuccess) {
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => const App()));
         } else if (state.isFailed) {
           Navigator.of(context).pop();

@@ -27,8 +27,12 @@ class UserModel extends SocUser {
       picUrl: json['pic_url'] ?? '',
       id: json['id'] ?? '',
       email: json['email'] ?? '',
-      followee: json['followee'] ?? [],
-      following: json['following'] ?? [],
+      followee: json['followee'] != null
+          ? json['followee'].map<String>((e) => e.toString()).toList() ?? []
+          : [],
+      following: json['following'] != null
+          ? json['following'].map<String>((e) => e.toString()).toList() ?? []
+          : [],
       post: json['posts'] ?? [],
       authUid: json['auth_uid'] ?? '',
     );

@@ -1,9 +1,17 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:soc_app/features/explore/presentation/cubits/detail_profile_post_cubit.dart';
+import 'package:soc_app/features/explore/presentation/cubits/explore_cubit.dart';
 import 'package:soc_app/features/explore/presentation/pages/explore_page.dart';
+import 'package:soc_app/features/post/presentation/cubits/post_cubit.dart';
 import 'package:soc_app/features/post/presentation/page/create_post_page.dart';
+import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
 import 'package:soc_app/features/profile/registration/presentation/pages/user_profile_page.dart';
 import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
+
+import 'core/di/service_locator.dart';
+import 'features/explore/presentation/cubits/follow_unfollow_cubit.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -29,7 +37,7 @@ class _AppState extends State<App> {
   }
 
   /// widget list
-  final List<Widget> bottomBarPages = [
+  final List<Widget> bottomBarPages = const [
     YourPage(),
     CreatePostPage(),
     ExplorePage(),
@@ -42,7 +50,25 @@ class _AppState extends State<App> {
     // return StartupPage();
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-      body: Center(
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => getIt<PostCubit>(),
+          ),
+          BlocProvider(
+            create: (context) => getIt<ExploreCubit>()..getUsers(),
+          ),
+          // provide the detail user here
+          // because will cause concurrency issue if
+          // we put the provider in detail user page
+          // when re enter the page.
+          BlocProvider(
+            create: (context) => getIt<DetailProfilePostCubit>(),
+          ),
+          BlocProvider(
+            create: (context) => getIt<FollowUnfollowCubit>(),
+          ),
+        ],
         child: IndexedStack(
           // controller: _pageController,
           // physics: const NeverScrollableScrollPhysics(),

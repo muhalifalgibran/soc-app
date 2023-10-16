@@ -19,7 +19,7 @@ class _YourPageState extends State<YourPage> {
       body: SingleChildScrollView(
         child: Column(
             children: List.generate(100, (index) {
-          return _ListPost();
+          return const _ListPost();
         })),
       ),
     );

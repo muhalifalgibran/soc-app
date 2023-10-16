@@ -1,4 +1,5 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/network/graphql_config.dart';
 
 abstract class GraphQLModule {
@@ -8,8 +9,8 @@ abstract class GraphQLModule {
 }
 
 class GraphQLModuleImpl extends GraphQLModule {
-  static final GraphQLConfig _config = GraphQLConfig();
-  final GraphQLClient _client = _config.client();
+  // static final GraphQLConfig _config = GraphQLConfig();
+  final GraphQLClient _client = GraphQLConfig.client();
 
   @override
   Future<Map<String, dynamic>> queryMethod(String query,

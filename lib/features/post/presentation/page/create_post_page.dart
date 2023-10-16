@@ -74,20 +74,16 @@ class _CreatePostPageState extends State<CreatePostPage> {
   Widget build(BuildContext context) {
     final isResetActive =
         image?.path != null || usernames.isNotEmpty || captions.text != '';
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => getIt<PostCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => _tagCubit,
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => _tagCubit,
       child: BlocListener<PostCubit, PostState>(
         listener: (context, state) {
           if (state.isSuccess) {
             Navigator.of(context).pop();
             resetForm();
+            context.read<ProfileCubit>()
+              ..getPosts()
+              ..getProfile();
           }
           if (state.isLoading) {
             showLoading();

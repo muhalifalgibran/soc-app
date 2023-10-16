@@ -125,13 +125,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     // box.close();
     // get posts by userid
     if (userId != '') {
-      final getUser = await getIt<GetPosts>().call(userId!);
+      final getPosts = await getIt<GetPosts>().call(userId!);
 
       // give throttle because when it goes so fast
       // sometimes the emit is slips by
       await Future.delayed(const Duration(milliseconds: 750));
 
-      getUser.fold(
+      getPosts.fold(
         (error) => emit(
           state.copyWith(
             status: ProfileStatusState.failed,

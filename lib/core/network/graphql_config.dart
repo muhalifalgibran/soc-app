@@ -8,8 +8,16 @@ class GraphQLConfig {
             'IDSS2Lonz9369KWkJZmdNRFjExVxqK2IdB7cJIN5NCGfGlReMlV2iEpORZkAbke9'
       });
 
-  GraphQLClient client() => GraphQLClient(
+  // GraphQLClient get client => client();
+
+  static GraphQLClient client() => GraphQLClient(
         link: httpLink,
-        cache: GraphQLCache(),
+        defaultPolicies: DefaultPolicies(
+          query: Policies(
+            cacheReread: CacheRereadPolicy.ignoreAll,
+            fetch: FetchPolicy.noCache,
+          ),
+        ),
+        cache: GraphQLCache(store: HiveStore()),
       );
 }
