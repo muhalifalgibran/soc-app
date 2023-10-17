@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/error/failure.dart';
 import 'package:soc_app/features/profile/registration/domain/usecases/login_user.dart';
-import 'package:soc_app/features/profile/registration/domain/usecases/logout_user.dart';
 
 enum LoginStatusState {
   initial,

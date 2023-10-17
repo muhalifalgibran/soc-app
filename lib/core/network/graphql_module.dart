@@ -1,5 +1,4 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/network/graphql_config.dart';
 
 abstract class GraphQLModule {

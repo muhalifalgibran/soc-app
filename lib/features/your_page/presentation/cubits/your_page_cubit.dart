@@ -5,7 +5,6 @@ import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/error/failure.dart';
 import 'package:soc_app/core/utils/general_status_state.dart';
 import 'package:soc_app/features/post/domain/entities/post.dart';
-import 'package:soc_app/features/profile/registration/domain/usecases/get_posts.dart';
 import 'package:soc_app/features/your_page/domain/usecases/get_your_page.dart';
 
 class YourPageState extends Equatable {

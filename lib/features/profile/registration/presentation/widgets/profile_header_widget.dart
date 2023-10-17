@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/features/post/domain/entities/post.dart';
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
 import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
-import 'package:soc_app/features/profile/registration/presentation/pages/login_page.dart';
 import 'package:soc_app/widgets/soc_button.dart';
 import 'package:soc_app/widgets/soc_circular_image.dart';
 
@@ -62,7 +60,7 @@ class ProfileHeadWidget extends StatelessWidget {
                       // post
                       Column(
                         children: [
-                          Text('${posts?.length}'),
+                          Text('${posts.length}'),
                           const SizedBox(height: 4),
                           const Text('posts'),
                         ],

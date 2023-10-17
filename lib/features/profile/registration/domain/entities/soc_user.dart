@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
 
 class SocUser extends Equatable {
   final String username;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:soc_app/widgets/neu_container.dart';
 
 class SocForm extends StatelessWidget {
   const SocForm({

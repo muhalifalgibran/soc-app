@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:soc_app/core/di/service_locator.dart';
-import 'package:soc_app/features/explore/presentation/cubits/detail_profile_post_cubit.dart';
 import 'package:soc_app/features/explore/presentation/cubits/explore_cubit.dart';
-import 'package:soc_app/features/explore/presentation/cubits/follow_unfollow_cubit.dart';
 import 'package:soc_app/features/explore/presentation/pages/detail_user_page.dart';
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
 import 'package:soc_app/widgets/neu_container.dart';

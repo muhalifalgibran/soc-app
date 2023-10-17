@@ -21,31 +21,31 @@ class MockHiveInterface extends Mock implements HiveInterface {}
 class MockBox extends Mock implements Box<dynamic> {}
 
 void main() {
-  late final GraphQLModule _module;
-  late ProfileRemoteDataSource _dataSource;
+  late final GraphQLModule module;
+  late ProfileRemoteDataSource dataSource;
   late MockHiveInterface mockHive;
   late MockBox mockBox;
 
   void initHive() {
     var path = Directory.current.path;
-    Hive.init(path + '/test/unit_test');
+    Hive.init('$path/test/unit_test');
   }
 
   initHive();
 
   setUpAll(() {
     // set up the instances
-    _module = MockGraphQLModule();
+    module = MockGraphQLModule();
     mockHive = MockHiveInterface();
     mockBox = MockBox();
 
     // register our get it
-    registerTestLazySingleton<GraphQLModule>(_module);
+    registerTestLazySingleton<GraphQLModule>(module);
 
     // register the hive
     registerTestFactory<HiveInterface>(mockHive);
     registerTestFactory<Box<dynamic>>(mockBox);
-    _dataSource = ProfileRemoteDataSourceImpl();
+    dataSource = ProfileRemoteDataSourceImpl();
   });
 
   var userDataMap = {
@@ -90,29 +90,29 @@ void main() {
 
   test('should return user profile', () async {
     // arrange
-    when(() => _module.queryMethod(any())).thenAnswer((_) async => userDataMap);
+    when(() => module.queryMethod(any())).thenAnswer((_) async => userDataMap);
 
     when(() => mockHive.openBox('userStatus')).thenAnswer((_) async => mockBox);
     when(() => mockBox.get('userUid')).thenAnswer((_) async => '12321');
 
     // act
-    final api = await _dataSource.getUserProfile();
+    final api = await dataSource.getUserProfile();
 
     // verify
     // the valid return
     expect(api, isA<SocUser>());
     expect(api, UserModel.fromJson(userDataMap['users']![0]));
     verify(
-      () => _module.queryMethod(any()),
+      () => module.queryMethod(any()),
     ).called(1);
   });
 
   test('should return user\'s post', () async {
     // arrange
-    when(() => _module.queryMethod(any())).thenAnswer((_) async => userPost);
+    when(() => module.queryMethod(any())).thenAnswer((_) async => userPost);
 
     // act
-    final api = await _dataSource.getPosts('123');
+    final api = await dataSource.getPosts('123');
 
     // verify
     // the valid return
@@ -122,7 +122,7 @@ void main() {
       userPost['posts'].map<Post>((e) => PostModel.fromJson(e)).toList(),
     );
     verify(
-      () => _module.queryMethod(any()),
+      () => module.queryMethod(any()),
     ).called(1);
   });
 }

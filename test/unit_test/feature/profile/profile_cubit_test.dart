@@ -33,7 +33,7 @@ void main() {
   // init the hive
   void initHive() {
     var path = Directory.current.path;
-    Hive.init(path + '/test/unit_test');
+    Hive.init('$path/test/unit_test');
   }
 
   initHive();

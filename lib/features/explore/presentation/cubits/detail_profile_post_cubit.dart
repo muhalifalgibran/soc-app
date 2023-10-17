@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/error/failure.dart';
-import 'package:soc_app/features/explore/domain/usecases/follow_user.dart';
 import 'package:soc_app/features/post/domain/entities/post.dart';
 import 'package:soc_app/features/profile/registration/domain/usecases/get_posts.dart';
 

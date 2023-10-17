@@ -5,7 +5,6 @@ import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/error/failure.dart';
 import 'package:soc_app/features/post/domain/entities/post.dart';
 import 'package:soc_app/features/post/domain/usecases/create_post.dart';
-import 'package:soc_app/features/post/domain/usecases/get_tags.dart';
 
 enum PostStatusState {
   initial,

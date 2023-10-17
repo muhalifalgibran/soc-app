@@ -4,10 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:soc_app/app.dart';
 import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/core/network/graphql_config.dart';
-import 'package:soc_app/features/startup/presentation/cubit/startup_cubit.dart';
 import 'package:soc_app/features/startup/presentation/page/startup_page.dart';
 import 'package:soc_app/injection.dart';
 

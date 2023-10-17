@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soc_app/core/di/service_locator.dart';
-import 'package:soc_app/features/post/presentation/cubits/post_cubit.dart';
 import 'package:soc_app/features/post/presentation/cubits/tag_cubit.dart';
 import 'package:soc_app/widgets/soc_button.dart';
 
@@ -49,7 +48,7 @@ class _AddTagWidgetState extends State<AddTagWidget> {
   }
 
   void addTagDialog(BuildContext context) async {
-    final Debouncer _debounce = Debouncer(const Duration(milliseconds: 300));
+    final Debouncer debounce = Debouncer(const Duration(milliseconds: 300));
     return showDialog(
       context: context,
       builder: (context) {
@@ -73,7 +72,7 @@ class _AddTagWidgetState extends State<AddTagWidget> {
                             valueAdd = value;
                             // with debouncer so we're not calling our API
                             // per word. it will be much efficient
-                            _debounce.call(
+                            debounce.call(
                               () => cubit.getTags(value),
                             );
                           },

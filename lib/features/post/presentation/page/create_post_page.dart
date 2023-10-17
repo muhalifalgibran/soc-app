@@ -269,7 +269,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     ),
                     height: 300,
                     width: 280,
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: BlocProvider(
                       create: (context) => _tagCubit,
                       child: BlocBuilder<TagCubit, TagState>(
