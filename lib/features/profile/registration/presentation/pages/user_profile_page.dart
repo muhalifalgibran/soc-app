@@ -55,7 +55,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         if (state.isLoadingLogout) {
           showLoading(context);
         } else if (state.isSuccessLogout) {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => LoginPage()),
           );

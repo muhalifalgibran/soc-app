@@ -75,8 +75,15 @@ class _CreatePostPageState extends State<CreatePostPage> {
   Widget build(BuildContext context) {
     final isResetActive =
         image?.path != null || usernames.isNotEmpty || captions.text != '';
-    return BlocProvider(
-      create: (context) => _tagCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => _tagCubit,
+        ),
+        BlocProvider(
+          create: (context) => getIt<PostCubit>(),
+        ),
+      ],
       child: BlocListener<PostCubit, PostState>(
         listener: (context, state) {
           if (state.isSuccess) {
@@ -172,7 +179,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                                 child: Text(
-                                  '@${usernames[index]}',
+                                  '@//${usernames[index]}',
                                   style: const TextStyle(color: Colors.black),
                                 ),
                               ),

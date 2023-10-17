@@ -10,7 +10,6 @@ import 'package:soc_app/features/profile/registration/domain/entities/soc_user.d
 import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
 import 'package:soc_app/features/profile/registration/presentation/widgets/image_grid_widget.dart';
 import 'package:soc_app/features/your_page/presentation/cubits/your_page_cubit.dart';
-import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
 
 class DetailUserPage extends StatefulWidget {
   const DetailUserPage(this.user, {super.key});

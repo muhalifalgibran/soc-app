@@ -18,40 +18,45 @@ class _YourPageState extends State<YourPage> {
   void initState() {
     super.initState();
     _cubit = getIt<YourPageCubit>();
-    _cubit.getYourPage();
+    // _cubit.getYourPage();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade400,
-      body: BlocBuilder<YourPageCubit, YourPageState>(
-        bloc: _cubit,
-        builder: (context, state) {
-          if (state.isSuccess) {
-            // show post
-            if (state.posts != []) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: List.generate(
-                    state.posts!.length,
-                    (index) {
-                      return _ListPost(
-                        state.posts![index],
-                      );
-                    },
+    return BlocProvider(
+      create: (context) => _cubit..getYourPage(),
+      child: Scaffold(
+        backgroundColor: Colors.grey.shade400,
+        body: BlocBuilder<YourPageCubit, YourPageState>(
+          bloc: _cubit,
+          builder: (context, state) {
+            if (state.isSuccess) {
+              // show post
+              if (state.posts != []) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(
+                      state.posts!.length,
+                      (index) {
+                        return _ListPost(
+                          state.posts![index],
+                        );
+                      },
+                    ),
                   ),
-                ),
-              );
-            } else {
-              return const Center(
-                child: Text('Follow or make a posts..'),
-              );
-              // show empty post
+                );
+              } else {
+                return const Center(
+                  child: Text('Follow or make a posts..'),
+                );
+                // show empty post
+              }
             }
-          }
-          return Container();
-        },
+            return const Center(
+              child: Text('Follow someone or make a posts..'),
+            );
+          },
+        ),
       ),
     );
   }
