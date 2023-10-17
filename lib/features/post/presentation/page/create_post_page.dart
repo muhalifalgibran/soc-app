@@ -297,9 +297,6 @@ class _CreatePostPageState extends State<CreatePostPage> {
             state.usernames!.length,
             (index) => GestureDetector(
               onTap: () {
-                // Regex pattern start from last until first space from last
-                RegExp regex = RegExp(r'\S+\s\@\w+$');
-
                 // Pola regex untuk mencocokkan dari akhir string hingga spasi pertama
                 RegExp regexGetLastWord = RegExp(r' (\S+)$');
 
