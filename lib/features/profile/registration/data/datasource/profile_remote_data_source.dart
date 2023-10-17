@@ -54,9 +54,8 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     """;
 
     final res = await _module.queryMethod(query);
-    List<Post> result = res['posts'].map<Post>((e) {
-      return PostModel.fromJson(e);
-    }).toList();
+    List<Post> result =
+        res['posts'].map<Post>((e) => PostModel.fromJson(e)).toList();
     return result;
   }
 }
