@@ -9,6 +9,8 @@ import 'package:soc_app/features/explore/presentation/widgets/profile_user_widge
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
 import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
 import 'package:soc_app/features/profile/registration/presentation/widgets/image_grid_widget.dart';
+import 'package:soc_app/features/your_page/presentation/cubits/your_page_cubit.dart';
+import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
 
 class DetailUserPage extends StatefulWidget {
   const DetailUserPage(this.user, {super.key});
@@ -74,6 +76,7 @@ class _DetailUserPageState extends State<DetailUserPage> {
                   getIt<DetailProfilePostCubit>().getPosts(
                     widget.user.authUid!,
                   );
+                  getIt<YourPageCubit>().getYourPage();
                   context.read<ProfileCubit>()
                     ..getPosts()
                     ..getProfile();

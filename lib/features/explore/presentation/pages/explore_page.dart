@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:soc_app/core/di/service_locator.dart';
 import 'package:soc_app/features/explore/presentation/cubits/explore_cubit.dart';
 import 'package:soc_app/features/explore/presentation/pages/detail_user_page.dart';
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
@@ -15,12 +16,15 @@ class ExplorePage extends StatefulWidget {
 
 class _ExplorePageState extends State<ExplorePage> {
   String currentUserId = '';
+  late ExploreCubit cubit;
   @override
   void initState() {
     super.initState();
     // we need to get the current userId
     // so we can map whether we are in followee || followers
     // or not
+    cubit = getIt<ExploreCubit>();
+    // cubit.getUsers();
     setUserId();
   }
 
@@ -32,6 +36,7 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ExploreCubit, ExploreState>(
+      bloc: cubit..getUsers(),
       builder: (context, state) {
         if (state.isSuccess) {
           return SingleChildScrollView(

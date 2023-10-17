@@ -59,7 +59,7 @@ class _AppState extends State<App> {
             create: (context) => getIt<PostCubit>(),
           ),
           BlocProvider(
-            create: (context) => getIt<ExploreCubit>()..getUsers(),
+            create: (context) => getIt<ExploreCubit>(),
           ),
           // provide the detail user here
           // because will cause concurrency issue if
