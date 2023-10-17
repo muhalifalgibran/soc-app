@@ -7,12 +7,14 @@ class PostModel extends Post {
     required List<String>? tags,
     required String? postPic,
     required String? userId,
+    required String? username,
   }) : super(
           id: id ?? '',
           caption: caption ?? '',
           tags: tags ?? [],
           postPic: postPic ?? '',
           userId: userId ?? '',
+          username: username ?? '',
         );
 
   factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
@@ -21,5 +23,6 @@ class PostModel extends Post {
         tags: json['tags'].map<String>((e) => e.toString()).toList() ?? [],
         postPic: json['post_pic'],
         userId: json['user_id'],
+        username: json['username'],
       );
 }

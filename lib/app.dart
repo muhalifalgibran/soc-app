@@ -8,6 +8,7 @@ import 'package:soc_app/features/post/presentation/cubits/post_cubit.dart';
 import 'package:soc_app/features/post/presentation/page/create_post_page.dart';
 import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
 import 'package:soc_app/features/profile/registration/presentation/pages/user_profile_page.dart';
+import 'package:soc_app/features/your_page/presentation/cubits/your_page_cubit.dart';
 import 'package:soc_app/features/your_page/presentation/pages/your_page.dart';
 
 import 'core/di/service_locator.dart';
@@ -52,6 +53,9 @@ class _AppState extends State<App> {
       backgroundColor: Colors.grey.shade300,
       body: MultiBlocProvider(
         providers: [
+          BlocProvider(
+            create: (context) => getIt<YourPageCubit>(),
+          ),
           BlocProvider(
             create: (context) => getIt<PostCubit>(),
           ),

@@ -238,12 +238,14 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           ? () async {
                               var box = await Hive.openBox('userStatus');
                               var userId = box.get('userUid');
+                              var username = box.get('username');
                               box.close();
 
                               final post = Post(
                                   caption: captions.text,
                                   postPic: image?.path ?? '',
                                   tags: usernames != [] ? usernames : null,
+                                  username: username,
                                   userId: userId);
                               getIt<PostCubit>().createPost(post);
                             }

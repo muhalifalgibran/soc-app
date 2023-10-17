@@ -6,6 +6,7 @@ class Post extends Equatable {
   final List<String>? tags;
   final String postPic;
   final String userId;
+  final String username;
 
   const Post({
     this.id,
@@ -13,6 +14,7 @@ class Post extends Equatable {
     this.tags,
     required this.postPic,
     required this.userId,
+    required this.username,
   });
 
   @override
@@ -22,5 +24,6 @@ class Post extends Equatable {
         tags,
         postPic,
         userId,
+        username,
       ];
 }

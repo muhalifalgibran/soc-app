@@ -7,6 +7,7 @@ import 'package:soc_app/features/explore/presentation/cubits/explore_cubit.dart'
 import 'package:soc_app/features/explore/presentation/cubits/follow_unfollow_cubit.dart';
 import 'package:soc_app/features/explore/presentation/widgets/profile_user_widget.dart';
 import 'package:soc_app/features/profile/registration/domain/entities/soc_user.dart';
+import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
 import 'package:soc_app/features/profile/registration/presentation/widgets/image_grid_widget.dart';
 
 class DetailUserPage extends StatefulWidget {
@@ -73,6 +74,9 @@ class _DetailUserPageState extends State<DetailUserPage> {
                   getIt<DetailProfilePostCubit>().getPosts(
                     widget.user.authUid!,
                   );
+                  context.read<ProfileCubit>()
+                    ..getPosts()
+                    ..getProfile();
                   getIt<ExploreCubit>().getUsers();
                   setState(() {});
                 }

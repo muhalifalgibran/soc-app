@@ -18,6 +18,7 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
   final _firebaseAuthClient = FirebaseAuthClient();
   final _firebaseStorageClient = FirabaseStorageClient();
   final _graphQLModule = getIt<GraphQLModule>();
+
   @override
   Future<SocUser> createUser(UserData data) async {
     String downloadUrl = '';
@@ -38,7 +39,6 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
             await _firebaseStorageClient.uploadAvatars(file, 'avatars');
       }
       // insert to graphQL
-
       var mutation = """mutation MyMutation {
         insert_users(objects: {auth_uid: "${credential.user?.uid}" ,email: "${data.email}", pic_url: "$downloadUrl", username: "${data.username}"}) {
           returning {

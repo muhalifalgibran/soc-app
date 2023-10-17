@@ -24,12 +24,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        _profileCubit = context.read<ProfileCubit>();
-        _getData();
-      },
-    );
+    _profileCubit = getIt<ProfileCubit>();
+    _getData();
   }
 
   void showLoading(BuildContext context) {
@@ -73,7 +69,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
         if (state.isSuccessGetPosts || state.isSuccessGetProfile) {
           return RefreshIndicator(
             onRefresh: () async {
-              // _getData();
+              // can refersh the page
+              _getData();
             },
             child: SingleChildScrollView(
               child: Column(
