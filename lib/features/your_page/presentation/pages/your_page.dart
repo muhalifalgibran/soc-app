@@ -18,13 +18,13 @@ class _YourPageState extends State<YourPage> {
   void initState() {
     super.initState();
     _cubit = getIt<YourPageCubit>();
-    // _cubit.getYourPage();
+    _cubit.getYourPage();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => _cubit..getYourPage(),
+      create: (context) => _cubit,
       child: Scaffold(
         backgroundColor: Colors.grey.shade400,
         body: BlocBuilder<YourPageCubit, YourPageState>(
