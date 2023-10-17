@@ -1,16 +1,14 @@
-# soc_app
 
-A new Flutter project.
+# soc app
 
-## Getting Started
+## **prerequisite:**
 
-This project is a starting point for a Flutter application.
+ - Flutter Version: 3.10.0
+ - Dart Version: 3.0.0
+ ## Installation
 
-A few resources to get you started if this is your first Flutter project:
+ You can check on firebase app distribution:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ - Install firebase app distribution (appstore/playstore)
+ - Accept invitation in your email
+ - Open firebase distribution and install the app
