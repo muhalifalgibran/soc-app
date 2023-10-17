@@ -11,6 +11,7 @@ import 'package:soc_app/features/post/presentation/cubits/post_cubit.dart';
 import 'package:soc_app/features/post/presentation/cubits/tag_cubit.dart';
 import 'package:soc_app/features/post/presentation/widgets/add_tag_widget.dart';
 import 'package:soc_app/features/profile/registration/presentation/cubit/profile_cubit.dart';
+import 'package:soc_app/features/your_page/presentation/cubits/your_page_cubit.dart';
 import 'package:soc_app/widgets/neu_container.dart';
 import 'package:soc_app/widgets/soc_button.dart';
 
@@ -84,6 +85,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
             context.read<ProfileCubit>()
               ..getPosts()
               ..getProfile();
+            context.read<YourPageCubit>().getYourPage();
           }
           if (state.isLoading) {
             showLoading();

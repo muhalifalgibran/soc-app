@@ -41,8 +41,9 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
   @override
   Future<List<Post>> getPosts(String userId) async {
+    // get your posts order by the newest post
     var query = """query MyQuery {
-      posts(where: {user_id: {_eq: "$userId"}}) {
+      posts(where: {user_id: {_eq: "$userId"}}, order_by: {created_at: desc_nulls_last}) {
         post_pic
         tags
         id

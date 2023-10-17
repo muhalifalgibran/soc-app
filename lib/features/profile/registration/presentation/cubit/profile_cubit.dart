@@ -106,7 +106,10 @@ class ProfileCubit extends Cubit<ProfileState> {
           failure: error,
         ),
       ),
-      (data) {
+      (data) async {
+        var box = await Hive.openBox('userStatus');
+        box.put('username', data.username);
+
         emit(
           state.copyWith(
             status: ProfileStatusState.successGetProfile,

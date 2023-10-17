@@ -46,7 +46,7 @@ class YourPageDataSourceImpl implements YourPageDataSource {
     // then, query get posts from all user's following and user's posts too
     String queryGetPosts = """
     query MyQuery {
-      posts(where: {user_id: {_in: $listFollowing}}) {
+      posts(where: {user_id: {_in: $listFollowing}}, order_by: {created_at: desc_nulls_last}) {
         id
         caption
         post_pic

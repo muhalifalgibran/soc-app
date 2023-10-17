@@ -26,7 +26,7 @@ class PostRemoteDataSourceImpl extends PostRemoteDataSource {
         .then((downloadUrl) async {
       // save to Hasura after complete upload the pic
       var mutation = """mutation MyMutation {
-      insert_posts(objects: {caption: "${post.caption}", post_pic: "$downloadUrl", tags: ${post.tags}, user_id: "${post.userId}"}) {
+      insert_posts(objects: {caption: "${post.caption}", post_pic: "$downloadUrl", tags: ${post.tags}, user_id: "${post.userId}", username: "${post.username}"}) {
             returning {
               id
             }
