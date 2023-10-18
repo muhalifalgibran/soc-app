@@ -18,13 +18,17 @@ Clean Architecture really makes the app more maintanable by seperating the layer
 	![Clean Coder Blog](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)
 
 In our code base the folder is seperated like this:
+
 ![enter image description here](https://gcdnb.pbrd.co/images/Lpi9OJG38mRY.png?o=1 )
+
 The project goals is to seperate the folder by layer as the clean architecture principle. the project utility is in core folder such like dependency injections, network, module, and etc.
 
 The features files contains the feature/requirements of the project, seperating feature by folders, so every feature folder has data, domain, and presentation layer.
+
 ![enter image description here](https://gcdnb.pbrd.co/images/QPf9Ys3SKjZ6.png?o=1)
- 
- Using this this approach really helps me to have a clear understanding about the objects, how the object interact to another and how the object have a single responsibility of its own function.
+
+Using this this approach really helps me to have a clear understanding about the objects, how the object interact to another and how the object have a single responsibility of its own function.
+
 ### State Management
 I am using bloc/cubit for the state management. Because, it is simple, makes our development time faster, and powerfull especially for our project scope.
 
@@ -42,7 +46,3 @@ I am using bloc/cubit for the state management. Because, it is simple, makes our
 | image_picker| for pick image from camera or directory|
 | dartz| Cutting boilerplate codes in DTO from data to presentation layer|
 | get_it| Just give the dependency injection works to get_it, it will generates our classes access|
-
-
-
-
